@@ -30,6 +30,7 @@ module Vagrant
         # Setup the home and working directories
         @homedir = @tempdir.join("home")
         @workdir = @tempdir.join("work")
+        puts "vagrant-spec IsolatedEnvironment initialize tempdir=#{@tempdir}"
 
         @homedir.mkdir
         @workdir.mkdir
@@ -37,6 +38,7 @@ module Vagrant
 
       # This closes the environment by cleaning it up.
       def close
+        puts "vagrant-spec IsolatedEnvironment close - rm #{@tempdir}"
         FileUtils.rm_rf(@tempdir)
       end
     end

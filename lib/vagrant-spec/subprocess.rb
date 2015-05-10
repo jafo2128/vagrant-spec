@@ -22,16 +22,19 @@ module Vagrant
 
       # Convenience method for executing a method.
       def self.execute(command, *args, &block)
+        puts "vagrant-spec executing #{command}"
         new(command, *args).execute(&block)
       end
 
       def initialize(command, *args, **options)
         @command = [command.dup].concat(args)
+        puts "vagrant-spec subprocess command: #{@command}"
         @options = options
         @logger  = Log4r::Logger.new("vagrant::spec::subprocess")
       end
 
       def execute
+        puts "vagrant-spec BEGIN EXECUTE"
         # Get the timeout, if we have one
         timeout = @options[:timeout]
 
@@ -157,6 +160,7 @@ module Vagrant
           yield io_name, extra_data if block_given?
         end
 
+        puts "vagrant-spec END EXECUTE"
         # Return an exit status container
         return Result.new(process.exit_code, io_data[:stdout], io_data[:stderr])
       end
