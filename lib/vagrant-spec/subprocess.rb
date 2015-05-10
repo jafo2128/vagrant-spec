@@ -63,6 +63,7 @@ module Vagrant
         @logger.info("Starting process: #{@command.inspect}")
         process = ChildProcess.build(*@command)
         process.cwd = workdir
+        puts "vagrant-spec subprocess process.cwd=#{workdir}"
 
         # Create the pipes so we can read the output in real time as
         # we execute the command.
@@ -78,7 +79,8 @@ module Vagrant
             process.environment[k] = v
           end
         end
-
+        puts "vagrant-spec subprocess env: #{process.environment.inspect}"
+        
         # Start the process
         process.start
 
